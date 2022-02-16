@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>About Us</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+           
+    </head>
+    <style>
+        .bodys{
+            background-image: url("{% static 'images/Bg.jpg' %}");
+             background-size: cover;
+        }
+    </style>
+    
+    <body class="bodys">
+
+    <nav class="navbar navbar-expand-lg navbar-light  sticky-top">
+        <a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+            height="60"></a>
+       
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" style="color: black" <a href="{% url 'homebefore' %}">Home <span
+                  class="sr-only">(current)</span></a>
+            </li>
+    
+            <li class="nav-item active" style="padding: 5px; width: 100px;">
+              <a class="nav-link btn btn-outline-primary btn-sm" style="color: black" role="button"<a href="{% url 'login' %}">Login
+                <span class="sr-only"></span></a>
+            </li>
+    
+            <li class="nav-item" style="padding: 5px; width: 100px;">
+              <a class="nav-link btn btn-outline-primary btn-sm  "role="button" style="color: black" <a href="{% url 'register' %}">SignUp
+                <span class="sr-only"></span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    
+
+    <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" role="content">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Login </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="loginCheck.php" method="POST" >
+                        <div class="form-row">
+                            <div class="form-group col-sm-4">
+                                    <label class="sr-only" for="emailid">Email address</label>
+                                    <input type="email" class="form-control form-control-sm mr-1" name="emailid" placeholder="Enter email">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="sr-only" for="pass">Password</label>
+                                <input type="password" class="form-control form-control-sm mr-1" name="pass" placeholder="Password">
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
+                            <button  class="btn btn-success btn-sm ml-1">
+                            <input type="submit" id="btn" value="Login"></button>      
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-12">
+               <h3>About Us</h3>
+               <hr>
+            </div>
+        </div>
+
+
+        <div class="row row-content">
+            <div class="col-12 col-sm-6">
+                <p style="font-weight: bold;">Revolving around today's era, there is a lot of medical research surfacing new diseases,
+                     new symptoms as well as new medical reports. Layman faces several problems in maintaining their medical data efficiently and updating it time to time without loss of any reports. These reports are not only required for medical purposes but in the pandemic, such reports hold a lot of significance for daily activities. In such a situation, having an alternative to store medical reports, and related data eases several aspects for people.</p>
+                <p style="font-weight: bold;">Some of the commonly noticed problems that have been discovered are: </p>
+                        
+                        <li style="font-weight: bold;">Loss of medical data due to inefficient maintenance</li> 
+                        <li style="font-weight: bold;">Difficult access of data by patients and doctors</li> 
+                        <li style="font-weight: bold;">Improper interpretation of report data</li> 
+                        <li style="font-weight: bold;">Insecure storage of data</li>
+                        <br>
+
+                <p style="font-weight: bold;">We at DoCure wish to solve these problems faced by common people.</p>
+            </div>
+            <div class="col-12 col-sm-6">
+                    <div class="card">
+                        <h3 class="card-header bg-primary text-white">Facts At a Glance</h3>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-6">Started</dt>
+                                <dd class="col-6">15 Aug. 2021</dd>
+                                <dt class="col-6">Students</dt>
+                                <dd class="col-6">04</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+
+    </div>
+
+    </body>
+</html>

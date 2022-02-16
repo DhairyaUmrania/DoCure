@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<title>Home</title>
+	
+
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: 'Roboto', sans-serif;
+		}
+		.container{
+			width:100%;
+			height: 100vh;
+			background-image: linear-gradient(rgba(0, 0, 0, 0.7),rgba(0,0,0,0.7)),url("{% static 'images/BG.jpg' %}");
+ 			 background-size: cover;
+			background-position: center;
+			background-size: cover;
+			padding-left: 8%;
+			padding-right: 8%;
+			box-sizing: border-box;
+		}
+		.navbar{
+			height: 12%;
+			display:flex;
+			align-items: center;
+		}
+		.logo{
+			width:50px;
+			cursor: pointer;
+		}
+		.menu-icon{
+			width:30px;
+			cursor: pointer;
+			margin-left: 40px;
+		}
+		nav{
+			flex: 1;
+			text-align: right;
+		}
+		nav ul li{
+			list-style: none;
+			display: inline-block;
+			margin-left: 60px;
+		}
+		nav ul li a{
+			text-decoration: none;
+			color: #fff;
+			font-size: 13px;
+		}
+		.row{
+			display: flex;
+			height: 88%;
+			align-items: center;
+		}
+		.col{
+			flex-basis: 50%;
+		}
+		h1{
+			color: #fff;
+			font-size: 100px;
+		}
+		
+		p{
+			color: #fff;
+			font-size: 11px;
+			line-height: 15px;
+		}
+		.card{
+			width: 200px;
+			height: 230px;
+			display: inline-block;
+			border-radius: 10px;
+			padding: 15px 25px;
+			box-sizing: border-box;
+			cursor: pointer;
+			margin: 10px 15px;
+			background-position: center;
+			background-size:cover;
+			transition: transform 0.5s;
+		}
+		.card1{
+			background-image: url("{% static 'images/upload.png' %}");
+		}
+		.card2{
+			background-image: url("{% static 'images/dashboard.jpg' %}");
+		}
+		.card3{
+			background-image: url("{% static 'images/dashboard1.jpg' %}");
+		}
+		.card4{
+			background-image: url("{% static 'images/background.jpg' %}");
+		}
+		.card:hover{
+			transform: translateY(-10px);
+		}
+		h5{
+			color: #fff;
+			text-shadow: 0 0 5px #999;
+		}
+		.card p{
+			text-shadow: 0 0 15px #000;
+			font-size: 8px;
+		}
+
+	</style>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'homebefore' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="/homebefore/">HOME</a></li>
+					<li><a href="/register/"  onclick = "fun();">DASHBOARD</a></li>
+					<li><a  href="/login/">Login</a></li>
+					<li><a  href="/register/">SignUp</a></li>
+					
+    
+				
+				</ul>
+
+			</nav>
+
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<h1>DoCure</h1>
+				<h2 style="color:white">
+					Smarter way to store your medical reports.
+				</h2>
+			</div>
+			<div class="col">
+				<div class="card card1">
+					<h5><a href="/register/" onclick = "fun();" style='color:white'>Upload Reports</h5>
+					<p>Start uploading your medical reports.</p>
+				</div>
+				<div class="card card2">
+					<h5>Check Dashboard</h5>
+					<p>See your previous reports along with your profile here.</p>
+				</div>
+				<div class="card card3">
+					<script type = "text/javascript">
+						function fun() {
+						alert("You should Register");
+						}
+						</script>
+			<h5><a href="/about/" style='color:white'>About Us</h5>
+					<p>Click Here</p>
+				</div>
+				<div class="card card4">
+					<h5>Feedback</h5>
+					<p>Write back to us!</p>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+</body>
+</html>
