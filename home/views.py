@@ -4,6 +4,16 @@ from tkinter.tix import Form
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.template.loader import render_to_string
+from django.db.models.query_utils import Q
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
 
 from django.contrib.auth import authenticate, login, logout
 from matplotlib.pyplot import rcdefaults
@@ -13,7 +23,7 @@ from DoCure.settings import EMAIL_HOST_USER
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
 
-from .forms  import NewUserForm,DoctorForm,ConfirmForm
+from .forms  import NewUserForm,DoctorForm,ConfirmForm,EditProfile
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
@@ -57,7 +67,7 @@ def viewDoctor(request):
     print(d1)
 
     
-    return render(request,'accounts/viewDoctor.html',context={'name':name,'d1':d1})
+    return render(request,'HtmlFiles/viewDoctor.html',context={'name':name,'d1':d1})
 
 def Doctorregister(request):
         if request.method == "POST":
@@ -88,7 +98,8 @@ def confirmForm(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
-    return render(request, 'HtmlFiles/home.html')
+            print('e')
+    return redirect('viewmyreports')
 
 
 
@@ -248,9 +259,17 @@ def GetInfo(path):
 def dashboard(request,rid):
     context={}
     name=request.user.username or None
+  
     all_reports= Cbc.objects.get(user=request.user, id=rid)
     return render(request,'HtmlFiles/dashboard.html',context={'name':name,'all_report':all_reports})
 
+def docDashboard(request, rid):
+    # print(user_id)
+    # user = User.objects.get(id=user_id)
+  
+   
+    all_reports= Cbc.objects.get(id=rid)
+    return render(request,'HtmlFiles/docDashboard.html',context={'all_report':all_reports})
 
 def ViewPatients(request):
     name=ConfirmDoctor.objects.get(id=request.session['ConfirmDoctor_id'])
@@ -274,8 +293,7 @@ def pendingReq(request, user_id, ar):
         a.save()
     elif(ar==0):
         a = ViewDoctor.objects.get(user=user, doctor=doc)
-        a.status = 0
-        a.save()
+        a.delete()
     return redirect("viewPatients")
 
 def docRequest(request, doc_id):
@@ -290,7 +308,7 @@ def docRequest(request, doc_id):
     v.save()
     name=request.user.username or None
     d1= ConfirmDoctor.objects.all()
-    return render(request,'HtmlFiles/viewDoctor.html',context={'name':name,'d1':d1})
+    return redirect("viewDoctor")
 
 def GetInfoOCR(path):
     cbc = path
@@ -381,7 +399,7 @@ def Doctorlogin(request):
                 if user is not None:
                         # login(request, user)
                         request.session['ConfirmDoctor_id']=user['id']
-                        return redirect('Doctorhome')
+                        return redirect('viewPatients')
                 else:
                         messages.error(request,'username or password not correct')
 	
@@ -390,14 +408,21 @@ def Doctorlogin(request):
             return render(request, 'HtmlFiles/Doctorlogin.html')
 
 def Doctorlogout_view(request):
-		del request.session['doctor_id']
+		del request.session['ConfirmDoctor_id']
 		messages.info(request, "You have successfully logged out.") 
 		return redirect("Doctorlogin")
 
+def docViewReports(request, user_id):
+    user = User.objects.get(id =user_id)
+    all_reports= Cbc.objects.filter(user=user) #.filter(user=request.user)
+    return render(request,'HtmlFiles/docViewReports.html',context={'posts':all_reports})
+
 def reports(request):
     user=request.user or None
+    print(user)
     all_reports= Cbc.objects.filter(user=user) #.filter(user=request.user)
     return render(request,'HtmlFiles/viewmyreports.html',context={'posts':all_reports})
+
 def loginPage(request):
 		if request.method == 'POST':
 			username = request.POST.get('name')
@@ -420,5 +445,55 @@ def logout_view(request):
 		logout(request)
 		messages.info(request, "You have successfully logged out.") 
 		return redirect("login")
+def getEditProfile(request):
+    user=request.user.id or None
+    instance = User.objects.get(id = user)
+    form = EditProfile(instance=instance)
 
+    return render(request,'HtmlFiles/editProfile.html',context={'form':form})
+def userProfile(request):
+    context={}
 
+    name=request.user.username or None
+    all_users= User.objects.get(pk = request.user.pk)  
+    return render(request,'HtmlFiles/userProfile.html',context={'name':name,'all_users':all_users})
+
+def editProfile(request):   
+    if request.method == "POST":
+        user=request.user.id or None
+        instance = User.objects.get(id = user)
+        editform = EditProfile(request.POST, instance = instance)
+        if editform.is_valid():
+            editform.save()
+            return redirect('userProfile')
+
+	
+
+def password_reset_request(request):
+                                if request.method == "POST":
+                                    password_reset_form = PasswordResetForm(request.POST)
+                                    if password_reset_form.is_valid():
+                                        data = password_reset_form.cleaned_data['email']
+                                        associated_users = User.objects.filter(Q(email=data))
+                                        associated_userss = ConfirmDoctor.objects.filter(Q(email=data))
+                                        if associated_users.exists():
+                                            for user in associated_users:
+                                                subject = "Password Reset Requested"
+                                                email_template_name = "HtmlFiles/password_reset_email.txt"
+                                                c = {
+                                                "email":user.email,
+                                                'domain':'127.0.0.1:8000',
+                                                'site_name': 'Website',
+                                                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                                                "user": user,
+                                                'token': default_token_generator.make_token(user),
+                                                'protocol': 'http',
+                                                }
+                                                email = render_to_string(email_template_name, c)
+                                                try:
+                                                    send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+                                                except BadHeaderError:
+                                                    return HttpResponse('Invalid header found.')
+                                                return redirect ("/password_reset/done/")
+                                password_reset_form = PasswordResetForm()
+                                return render(request=request, template_name="HtmlFiles/password_reset.html", context={"password_reset_form":password_reset_form})

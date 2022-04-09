@@ -17,38 +17,12 @@
 </head>
 
 <body>
-    <!--Navbar-->
-    <div class="containers">
-		<div class="navbar">
-
-			<a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
-				height="60"></a>
-		   
-			{% if user.is_authenticated %}
-			{% csrf_token %}
-			<nav>
-				<ul>
-					<li><a href="/home/">HOME</a></li>
-					<li><a href="/dashboard/">DASHBOARD</a></li>
-					<li><a  href="/FILE/">Upload</a></li>
-                    <li><a  href="/viewDoctor/">Book A Doctor</a></li>
-					
-					<li style="color:white">{{name}}</li>
-					<li><a  href="/logout/">Logout</a></li>
-					
-      {% endif %}
-				
-				</ul>
-
-			</nav>
-
-		</div>
-<body>
     <table border="1">
         {% for i in posts %}
         <tr>
              <td>{{i.date}}</td>
              <td>{{i.user}}</td>
+             <td>{{i.user.id}}</td>
              <td><div style="text-align: center;">
                 <a href="{% url 'dashboard' i.id%}"class="accept" name="{{i}}"
                     data-target="#loginModal1" value="{{i}}">ViewReports<span class="fa fa-check"></span></a></div></td>

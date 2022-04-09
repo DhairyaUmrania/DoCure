@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from home import views
-
+from django.contrib.auth import views as auth_views
 urlpatterns = [
         path('admin/', admin.site.urls),
     path('', views.homebefore, name="homebefore"),
@@ -39,5 +39,13 @@ path('Doctorlogout_view/',views.Doctorlogout_view,name='Doctorlogout_view'),
   path('viewPatients/', views.ViewPatients, name="viewPatients"),
   path('pendingReq/<str:user_id>/<int:ar>/', views.pendingReq, name="pendingReq"),
   path('viewmyreports/', views.reports, name="viewmyreports"),
-    
+  path('reset_password/', auth_views.PasswordResetView.as_view(),name="reset_password"),
+    path('reset_password_done/', auth_views.PasswordResetDoneView.as_view(template_name='HtmlFiles/password_reset_done.html'),name='password_reset_done'),
+     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='HtmlFiles/password_reset_confirm.html'),name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='HtmlFiles/password_reset_Complete.html'),name='password_reset_complete'),
+     path('userProfile/', views.userProfile, name="userProfile"),
+  path('editProfile/', views.editProfile, name="editProfile"),
+  path('getEditProfile/', views.getEditProfile, name="getEditProfile"),
+  path('docViewReports/<int:user_id>/', views.docViewReports, name="docViewReports"),
+  path('docDashboard/<int:rid>/', views.docDashboard, name="docDashboard"),
 ]

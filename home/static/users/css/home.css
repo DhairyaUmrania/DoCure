@@ -95,3 +95,30 @@ h5{
     text-shadow: 0 0 15px #000;
     font-size: 8px;
 }
+@media only screen and (max-width:1000px) {
+    .card{
+        width: 200px;
+        height: 230px;
+        display: inline-block;
+        border-radius: 10px;
+        padding: 15px 25px;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-top:20px;
+        background-position: center;
+        background-size:cover;
+        transition: transform 0.5s;
+    }
+    .card1{
+        background-image: url('/static/images/upload.png');
+    }
+    .card2{
+        background-image: url("/static/images/dashboard.jpg");
+    }
+    .card3{
+        background-image: url("/static/images/dashboard1.jpg");
+    }
+    .card4{
+        background-image: url( '/static/images/background.jpg');
+    }
+}

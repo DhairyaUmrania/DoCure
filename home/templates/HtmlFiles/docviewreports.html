@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1">
+        {% for i in posts %}
+        <tr>
+             <td>{{i.date}}</td>
+             <td>{{i.user}}</td>
+             <td><div style="text-align: center;">
+                <a href="{% url 'docDashboard' i.id%}"class="accept" name="{{i}}"
+                    data-target="#loginModal1" value="{{i}}">ViewReports<span class="fa fa-check"></span></a></div></td>
+        </tr>     
+        {% endfor %}   
+    </table>
+</body>
+</html>

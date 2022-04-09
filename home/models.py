@@ -27,7 +27,6 @@ class User(AbstractUser):
         
 from django.core.validators import RegexValidator
 class Doctor(models.Model):
-    last_login=models.DateTimeField(blank=True, null=True, verbose_name='last login')
     username=models.CharField(max_length=100)
     Surname=models.CharField(max_length=100)
     email=models.CharField(max_length=250,unique=True)
@@ -40,6 +39,7 @@ class Doctor(models.Model):
 class ConfirmDoctor(models.Model):
     username=models.CharField(max_length=100)
     password = models.CharField(max_length=50)
+    email=models.CharField(max_length=250,unique=True)
     Specialization=models.CharField(choices=[('Orthopedics','Orthopedics'),(' Internal Medicine',' Internal Medicine'),('Obstetrics and Gynecology','Obstetrics and Gynecology'),('Dermatology','Dermatology'),('Pediatrics','Pediatrics'),('General Surgery','General Surgery')],max_length=50)
     gender=models.CharField(choices=[('Male','Male'),('Female','Female')],max_length=15)
     doctor=models.ForeignKey(Doctor, on_delete=models.CASCADE)

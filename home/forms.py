@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 password = "123"
 make_password(password)
 
+    
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
     username= forms.CharField(label='Usename', 
@@ -40,7 +41,7 @@ class NewUserForm(UserCreationForm):
 class ConfirmDoctor(forms.ModelForm):
     class Meta:
         model = ConfirmDoctor
-        fields = ('username','password','gender','Specialization')
+        fields = ('username','password','gender','Specialization','email')
     
 
 from .models import Doctor
@@ -52,6 +53,8 @@ class DoctorForm(forms.ModelForm):
                     widget=forms.TextInput(attrs={'placeholder': 'Enter your Surname'}))
     email= forms.CharField(label='Email', 
                     widget=forms.TextInput(attrs={'placeholder': 'Enter your Email-id'}))
+    phone_number= forms.CharField(label='phonenumber', 
+                    widget=forms.TextInput(attrs={'placeholder': 'Enter your Correct Phone Number'}))
    
     
     
@@ -71,5 +74,7 @@ class ConfirmForm(forms.ModelForm):
     class Meta:
         model = Cbc
         fields = ("rbc","wbc","pc","hgb","rcd","mchc","mpv","pcv","mcv")
-
-    
+class EditProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username","first_name",'last_name', "email", "age","height","weight","gender")
