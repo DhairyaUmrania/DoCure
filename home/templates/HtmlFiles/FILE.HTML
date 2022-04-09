@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    {% load  static %}
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+ 
+<title>DoCure</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'users/css/file.css' %}">
+
+
+  <!--Font awesome link-->
+  
+
+
+  <!--Font awesome link-->
+  
+
+
+</head>
+
+    
+    
+   
+
+
+<body>
+  
+	<div class="container">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			{% if user.is_authenticated %}
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="">HOME</a></li>
+
+					
+					<li style="color:white">{{name}}</li>
+					
+      {% endif %}
+				
+				</ul>
+
+			</nav>
+
+		</div>
+
+		
+<div>
+
+	
+{% block content %}
+  <form method="post"  enctype="multipart/form-data">
+    {% csrf_token %}              
+                   
+                    <input   type="file" name="document" multiple><br>
+                    
+                    <p>Drag Your Image or PDF report in this area.</p>
+
+                    
+<button onclick="myFunction()" class="buttons">Upload</button></a>
+<script>
+  function myFunction() {
+    let passwords = prompt("Please enter your pdf  password if any or ignore");
+  }
+  </script>
+                   
+                    
+                
+          
+        </form>
+        {% if url %}
+        <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+      {% endif %}
+     
+            </form>
+   
+    
+   
+
+    {% endblock %} 
+
+    <style>
+    
+
+      </style>
+      
+      
+      
+
+    <script>
+      $(document).ready(function(){
+        $('form input').change(function () {
+          $('form p').text(this.files.length + " file(s) selected");
+        });
+      });
+    </script>
+  </body>
+  </html>
+

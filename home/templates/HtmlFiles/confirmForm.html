@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load crispy_forms_tags %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="{% static 'users/css/register.css' %}">
+
+  
+
+
+  <!--Font awesome link-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>DoCure</title>
+</head>
+
+<body>
+  <!--Navbar-->
+  <div class="container">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			{% if user.is_authenticated %}
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="">HOME</a></li>
+
+					
+					<li style="color:white">{{name}}</li>
+					
+      {% endif %}
+				
+				</ul>
+
+			</nav>
+
+		</div>
+
+    <h1>Please confirm if these values are correct.</h1> 
+    <form action="/confirmForm/" method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        
+        <input type="submit" value="Confirm">
+    </form>
+</body>
+</html>

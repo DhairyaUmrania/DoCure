@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'users/css/viewDoctor.css' %}">
+    <!--Font awesome link-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>DoCure</title>
+</head>
+
+<body>
+    <!--Navbar-->
+    <div class="containers">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			{% if user.is_authenticated %}
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="/home/">HOME</a></li>
+					<li><a href="/dashboard/">DASHBOARD</a></li>
+					<li><a  href="/FILE/">Upload</a></li>
+                    <li><a  href="/viewDoctor/">Book A Doctor</a></li>
+					
+					<li style="color:white">{{name}}</li>
+					<li><a  href="/logout/">Logout</a></li>
+					
+      {% endif %}
+				
+				</ul>
+
+			</nav>
+
+		</div>
+<body>
+    <table border="1">
+        {% for i in posts %}
+        <tr>
+             <td>{{i.date}}</td>
+             <td>{{i.user}}</td>
+             <td><div style="text-align: center;">
+                <a href="{% url 'dashboard' i.id%}"class="accept" name="{{i}}"
+                    data-target="#loginModal1" value="{{i}}">ViewReports<span class="fa fa-check"></span></a></div></td>
+        </tr>     
+        {% endfor %}   
+    </table>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'users/css/home.css' %}">
+</head>
+<body>
+
+	<div class="container">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'homebefore' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="/homebefore/">HOME</a></li>
+					<li><a href="/register/"  onclick = "fun();">DASHBOARD</a></li>
+					<li><a  href="/login/">Login</a></li>
+					<li><a  href="/register/">SignUp</a></li>
+					<li><a  href="/Doctorregister/">Are You a Doctor?</a></li>
+					
+
+					
+					
+    
+				
+				</ul>
+
+			</nav>
+
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<h1>DoCure</h1>
+				<h2 style="color:white">
+					Smarter way to store your medical reports.
+				</h2>
+			</div>
+			<div class="col">
+				<div class="card card1">
+					<h5><a href="/register/" onclick = "fun();" style='color:white'>Upload Reports</h5>
+					<p>Start uploading your medical reports.</p>
+				</div>
+				<div class="card card2">
+					<h5>Check Dashboard</h5>
+					<p>See your previous reports along with your profile here.</p>
+				</div>
+				<BR>
+				<div class="card card3">
+					<script type = "text/javascript">
+						function fun() {
+						alert("You should Register");
+						}
+						</script>
+						
+			<h5><a href="/about/" style='color:white'>About Us</h5>
+					<p>Click Here</p>
+				</div>
+				<div class="card card4">
+					<h5>Feedback</h5>
+					<p>Write back to us!</p>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+{% comment %} {% base extends 'HtmlFiles/Doctorhome.html' %}  {% endcomment %}
+<html lang="en">
+    {% load  static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/viewpatients.css' %}">
+    <title>DoCure</title>
+</head>
+<body>
+    <div class="container">
+		<div class="navbar">
+
+			<a class="navbar-brand" <a href="{% url 'home' %}"><img src='{% static 'images/Logo.jpeg' %}' width="120"
+				height="60"></a>
+		   
+			{% if name  %}
+			{% csrf_token %}
+			<nav>
+				<ul>
+					<li><a href="/Doctorhome/">HOME</a></li>
+					<li><a  href="/viewPatients/">ViewmyPatients</a></li>
+					
+					<li style="color:white">{{name.username}}</li>
+					<li><a  href="/Doctorlogout_view/">Logout</a></li>
+					{% endif %}
+		
+				
+				</ul>
+
+			</nav>
+
+		</div>
+    
+        <div style="text-align: center;">
+            <h1>My Patients</h1>
+            <br>
+            <table style="text-align: center;">
+        
+            <tr>
+                <th>Name</th>
+                <th>Option</th>
+              </tr>
+            {% for p in curr %}
+            <td>
+                
+                <h2>{{p.username}}</h2>
+            </td>
+            <td>
+                <div style="text-align: center;">
+                    <a href="/viewmyreports/"class="accept" name="{{i}}"
+                        data-target="#loginModal1" value="{{i}}">ViewReports<span class="fa fa-check"></span></a></div>
+                </tr>
+                {% endfor %}
+                </td>
+            </table>
+               <br>
+               <br>
+            <div style="text-align: center;">
+            <h1>Pending Requests</h1>
+            
+            <table style="text-align: center;">
+        
+                <tr>
+                  <th>Name</th>
+                  <th>Option</th>
+                </tr>
+                {% for p in pend %}
+                <tr>
+                    <td>
+                        <h2>{{p}}   </h2>
+                    </td>
+                    <td>
+                    <div style="text-align: center;">
+                        <a href="{% url 'pendingReq' user_id=p.id ar=1%}"class="accept" name="accept"
+                        data-target="#loginModal1" value="accept">ACCEPT <span class="fa fa-check"></span></a>
+                &nbsp
+                <a href="{% url 'pendingReq' user_id=p.id ar=0%}"class="deny" name="reject"
+                        data-target="#loginModal1" value="reject">DENY <span class="fa fa-check"></span></a>
+                        </div>
+                        </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </table>
+            </div>
+            
+    
+  
+</body>
+</html>
